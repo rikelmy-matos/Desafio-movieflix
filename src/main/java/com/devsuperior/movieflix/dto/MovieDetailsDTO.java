@@ -1,10 +1,5 @@
 package com.devsuperior.movieflix.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import com.devsuperior.movieflix.entities.Genre;
 import com.devsuperior.movieflix.entities.Movie;
 
 public class MovieDetailsDTO {
@@ -15,8 +10,7 @@ public class MovieDetailsDTO {
     private Integer year;
     private String imgUrl;
     private String synopsis;
-    
-	private List<GenreDTO> genre = new ArrayList<>();
+	private GenreDTO genre;
     
     
     
@@ -24,17 +18,6 @@ public class MovieDetailsDTO {
 		
 	}
 	
-	
-	public MovieDetailsDTO(Long id, String title, String subTitle, Integer year, String imgUrl, String synopsis, GenreDTO genre) {
-		this.id = id;
-		this.title = title;
-		this.subTitle = subTitle;
-		this.year = year;
-		this.imgUrl = imgUrl;
-		this.synopsis = synopsis;
-	}
-
-
 	public MovieDetailsDTO(Movie entity) {
 		id = entity.getId();
 		title = entity.getTitle();
@@ -42,13 +25,9 @@ public class MovieDetailsDTO {
 		year = entity.getYear();
 		imgUrl = entity.getImgUrl();
 		synopsis = entity.getSynopsis();
+		genre = new GenreDTO(entity.getGenre());
 	}
 	
-	public MovieDetailsDTO(Movie entity, Set<Genre> genre) {
-		this(entity);
-		genre.forEach(x -> this.genre.add(new GenreDTO(x)));
-	}
-
     public Long getId() {
         return id;
     }
@@ -97,13 +76,11 @@ public class MovieDetailsDTO {
         this.synopsis = synopsis;
     }
 
-
-	public List<GenreDTO> getGenre() {
+	public GenreDTO getGenre() {
 		return genre;
 	}
 
-
-	public void setGenre(List<GenreDTO> genre) {
+	public void setGenre(GenreDTO genre) {
 		this.genre = genre;
 	}
 }
